@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-void: #060914;
+    --color-panel: #10182a;
+    --color-surface: #10131e;
+    --color-surface-low: #181b27;
+    --color-surface-high: #262a36;
+    --color-surface-highest: #313441;
+    --color-ice: #f5f8ff;
+    --color-cyan: #63e6ff;
+    --color-cyan-dim: #51d7f0;
+    --color-magenta: #ff4fb3;
+    --color-magenta-soft: #ffafd3;
+    --color-volt: #75f5a6;
+    --color-volt-bright: #7bfbac;
+    --color-amber: #ffd86b;
+    --color-amber-warm: #ff9e2c;
+    --color-red: #ff6b7a;
+  }
+
+  body {
+    background-color: #0a0e19;
+    color: #e0e1f2;
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    overscroll-behavior-y: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  html, body {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
+.font-bebas {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.font-space {
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom 3D Levitation & Animations */
+@keyframes dishLevitateSweep {
+  0% {
+    transform: translateY(0px) rotateY(-18deg) rotateX(10deg);
+  }
+  50% {
+    transform: translateY(-12px) rotateY(18deg) rotateX(8deg);
+  }
+  100% {
+    transform: translateY(0px) rotateY(-18deg) rotateX(10deg);
+  }
+}
+
+@keyframes plateShadowPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+}
+
+@keyframes orbitSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes beaconPing {
+  0% { transform: scale(0.9); opacity: 0.95; }
+  50% { transform: scale(1.4); opacity: 0.3; }
+  100% { transform: scale(0.9); opacity: 0.95; }
+}
+
+@keyframes hudGlowPulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.04); }
+}
+
+@keyframes telemetryBadgePulse {
+  0% {
+    transform: scale(0.96);
+    box-shadow: 0 0 0 0 rgba(99, 230, 255, 0.45);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.015);
+    box-shadow: 0 0 14px 2px rgba(117, 245, 166, 0.35);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(99, 230, 255, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes liveDotBeacon {
+  0%, 100% { opacity: 0.35; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+
+.animate-telemetry-pulse {
+  animation: telemetryBadgePulse 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-live-beacon {
+  animation: liveDotBeacon 2s ease-in-out infinite;
+}
+
+.animate-dish-levitate {
+  animation: dishLevitateSweep 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.animate-plate-shadow {
+  animation: plateShadowPulse 6s ease-in-out infinite;
+}
+
+.animate-orbit-ring {
+  animation: orbitSpin 24s linear infinite;
+}
+
+.animate-hud-pulse {
+  animation: hudGlowPulse 4s ease-in-out infinite;
+}
+
+.beacon-dot {
+  animation: beaconPing 2s ease-in-out infinite;
+}
+
+.perspective-viewport {
+  perspective: 1200px;
+  perspective-origin: 50% 45%;
+}

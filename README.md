@@ -1,11 +1,49 @@
-<div align="center">
+# Plus-One — AI Household Orchestrator for Swiggy
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+> **Swiggy Builders Club Submission** — Multi-agent AI assistant that plans complete occasions (anniversary dinners, parents' visits, client dinners) by coordinating Swiggy Food, Instamart, and Dineout in parallel.
 
-  <h1>Built with AI Studio</h2>
+---
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## What It Does
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+You type: *"Plan our anniversary dinner this Saturday, budget ₹6000"*
 
-</div>
+Plus-One runs three AI agents simultaneously:
+
+| Agent | What it does |
+|-------|-------------|
+| **Food Agent** | Finds 3 restaurants matching your cuisine preferences, dietary constraints, and budget via Swiggy Food |
+| **Instamart Agent** | Sources cake + flowers with timed deliveries (flowers arrive before you leave, cake arrives after starters) |
+| **Dineout Agent** | Checks table availability, stacks GIRF + card + DineCash offers in the correct order, generates deeplink |
+
+The Orchestrator merges all three results into a single occasion plan with a timeline, cost breakdown, and one-tap confirm flow.
+
+---
+
+## Architecture
+
+```
+User Message
+     │
+     ▼
+Orchestrator (src/lib/agents/orchestrator.ts)
+     │
+     ├─── Food Agent ──────► Swiggy Food MCP (or LLM simulation)
+     ├─── Instamart Agent ──► Swiggy Instamart MCP (or LLM simulation)
+     └─── Dineout Agent ───► Swiggy Dineout MCP (or LLM simulation)
+           │
+           ▼
+     Conflict Resolution → Timeline Build → Plan Assembly
+           │
+           ▼
+     LLM: Generate warm summary message
+           │
+           ▼
+     Chat UI
+```
+
+**Key invariants enforced in code:**
+- `INV-1`: All 3 agents run via `Promise.all` — never sequential
+- `INV-2`: `book_table` / order placement only after explicit user "confirm" (TypeScript literal type gate)
+- `INV-3`: Household allergies propagated to every agent call
+- `INV-6`: Offer stacking always GIRF → card → DineCash (no deviation)
